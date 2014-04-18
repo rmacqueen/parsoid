@@ -16,7 +16,8 @@ var ParserEnv = require('../lib/mediawiki.parser.environment.js').MWParserEnviro
 	yargs = require('yargs'),
 	fs = require('fs');
 
-( function() {
+
+var execute = function (text) {
 	var standardOpts = Util.addStandardOptions({
 		'wt2html': {
 			description: 'Wikitext -> HTML',
@@ -190,10 +191,10 @@ var ParserEnv = require('../lib/mediawiki.parser.environment.js').MWParserEnviro
 			}
 		};
 
-		if ( argv.inputfile ) {
+		if ( text) {
 			//read input from the file, then process
-			var fileContents = fs.readFileSync( argv.inputfile, 'utf8' );
-			inputChunks.push( fileContents );
+			//var fileContents = fs.readFileSync( argv.inputfile, 'utf8' );
+			inputChunks.push( text );
 			processInput();
 		} else {
 			// collect input
@@ -262,4 +263,5 @@ var ParserEnv = require('../lib/mediawiki.parser.environment.js').MWParserEnviro
 		parserPipeline.processToplevelDoc( env.page.src );
 	}
 
-})();
+};
+module.exports.execute = execute;
